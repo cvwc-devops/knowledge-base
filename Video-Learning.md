@@ -6,6 +6,7 @@ https://www.youtube.com/watch?v=KuiAiUyuDY4&list=PLnFWJCugpwfzTlIJ-JtuATD2MBBD7_
 
 # Build Your Skills for Free
 https://www.freecodecamp.org
+https://www.youtube.com/@freecodecamp
 
 # 120 Free Online Math Courses
 https://www.freecodecamp.org/news/math-online-courses-from-worlds-top-universities/
@@ -24,3 +25,8 @@ https://freesql.com
 
 # Redis Crash Course
 https://youtu.be/OqCK95AS-YE
+
+# System Design Concepts Course
+https://youtu.be/F2FmTdLtb_4
+
+
