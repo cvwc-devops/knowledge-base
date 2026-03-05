@@ -6,8 +6,6 @@
 
 <!-- INDEX_START -->
 
-- [Travel](#travel)
-- [GitHub Repos](#github-repos)
 - [Systems](#systems)
   - [Operating Systems](#operating-systems)
   - [Core Services - DNS, DHCP, SSH, FTP](#core-services---dns-dhcp-ssh-ftp)
@@ -59,31 +57,6 @@
 - [Monitoring](#monitoring)
   - [Performance Engineering](#performance-engineering)
 - [AI & Automation](#ai--automation)
-- [Work](#work)
-  - [Remote Working & Digital Nomad](#remote-working--digital-nomad)
-  - [Training & Interview Materials](#training--interview-materials)
-  - [Banking Industry](#banking-industry)
-- [Miscellaneous](#miscellaneous)
-  - [Dev / DevOps / Open Source / Agile](#dev--devops--open-source--agile)
-  - [Vendors](#vendors)
-  - [Multimedia](#multimedia)
-  - [Marketing](#marketing)
-  - [Blogging](#blogging)
-  - [Crypto](#crypto)
-  - [Old Docs](#old-docs)
-- [Star History](#star-history)
-- [Memes](#memes)
-  - [This is the Lost Documentation](#this-is-the-lost-documentation)
-- [More Core Repos](#more-core-repos)
-  - [Knowledge](#knowledge)
-  - [DevOps Code](#devops-code)
-  - [Containerization Repos](#containerization-repos)
-  - [CI/CD Repos](#cicd-repos)
-  - [DBA - SQL](#dba---sql)
-  - [DevOps Reloaded](#devops-reloaded)
-  - [Templates](#templates)
-  - [Misc](#misc)
-- [Other Resources](#other-resources)
 
 <!-- INDEX_END -->
 
