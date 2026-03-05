@@ -1,0 +1,202 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: humor-game-ingress
+  namespace: humor-game
+  annotations:
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  # tls:
+  # - hosts:
+  #   - gameapp.games  # Production domain with SSL
+  #   secretName: gameapp-prod-tls
+  rules:
+    - host: gameapp.local  # For local development (no SSL)
+      http:
+        paths:
+          # API routes - forward to backend
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Backend endpoints - forward to backend
+          - path: /health
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /metrics
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /debug
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Everything else - serve from frontend
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+    
+    # Production domain
+    - host: gameapp.games  # For production (with SSL)
+      http:
+        paths:
+          # API routes - forward to backend
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Backend endpoints - forward to backend
+          - path: /health
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /metrics
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /debug
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Everything else - serve from frontend
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+    
+    # App subdomain
+    - host: app.gameapp.games
+      http:
+        paths:
+          # API routes - forward to backend
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Backend endpoints - forward to backend
+          - path: /health
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /metrics
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /debug
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Everything else - serve from frontend
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+
+---
+# ArgoCD Ingress for GitOps management
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  namespace: argocd
+  annotations:
+    # Disable SSL redirect for tunnel access to prevent redirect loops
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    # ArgoCD server configuration for UI access
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    # Handle forwarded headers properly for tunnel access
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    nginx.ingress.kubernetes.io/forwarded-for-header: "X-Forwarded-For"
+    nginx.ingress.kubernetes.io/forwarded-proto-header: "X-Forwarded-Proto"
+    nginx.ingress.kubernetes.io/forwarded-host-header: "X-Forwarded-Host"
+    # ArgoCD specific server snippet for grpc and timeout handling
+    nginx.ingress.kubernetes.io/server-snippet: |
+      grpc_read_timeout 300;
+      grpc_send_timeout 300;
+      client_body_timeout 60;
+      client_header_timeout 60;
+      client_max_body_size 1m;
+    # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  # tls:
+  # - hosts:
+  #   - argocd.gameapp.games  # Production ArgoCD with SSL
+  #   secretName: argocd-prod-tls
+  rules:
+    - host: argocd.gameapp.local  # Local ArgoCD access (no SSL)
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
+    
+    # Production ArgoCD access
+    - host: argocd.gameapp.games  # Production ArgoCD access (with SSL)
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80
+

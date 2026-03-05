@@ -1,0 +1,212 @@
+# Unified Ingress Configuration for All Domains
+# This single file handles all routing for Cloudflare Tunnel and local access
+
+---
+# Main Application Ingress (for app.gameapp.games and gameapp.games)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unified-app-ingress
+  namespace: humor-game
+  annotations:
+    # Disable SSL redirect for tunnel hosts
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # CRITICAL: Hostname forwarding headers for tunnel
+    nginx.ingress.kubernetes.io/proxy-set-headers: "true"
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    nginx.ingress.kubernetes.io/forwarded-for-header: "X-Forwarded-For"
+    nginx.ingress.kubernetes.io/forwarded-proto-header: "X-Forwarded-Proto"
+    nginx.ingress.kubernetes.io/forwarded-host-header: "X-Forwarded-Host"
+    # Handle multiple hosts properly
+    nginx.ingress.kubernetes.io/server-snippet: |
+      # Custom server configuration for multiple hosts
+spec:
+  ingressClassName: nginx
+  rules:
+    # Main app subdomain
+    - host: app.gameapp.games
+      http:
+        paths:
+          # API routes - forward to backend
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Backend health endpoints
+          - path: /health
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /metrics
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /debug
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Everything else - serve from frontend
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+    
+    # Main domain
+    - host: gameapp.games
+      http:
+        paths:
+          # API routes - forward to backend
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Backend health endpoints
+          - path: /health
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /metrics
+            pathType: Exact
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          - path: /debug
+            pathType: Prefix
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 3001
+          # Everything else - serve from frontend
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+
+---
+# Grafana Ingress (for grafana.gameapp.games)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unified-grafana-ingress
+  namespace: monitoring
+  annotations:
+    # Disable SSL redirect for tunnel hosts
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # Grafana specific settings
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: grafana.gameapp.games
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000
+
+---
+# Prometheus Ingress (for prometheus.gameapp.games)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unified-prometheus-ingress
+  namespace: monitoring
+  annotations:
+    # Disable SSL redirect for tunnel hosts
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # Prometheus specific settings
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: prometheus.gameapp.games
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus
+                port:
+                  number: 9090
+
+---
+# ArgoCD Ingress (for argocd.gameapp.games)
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unified-argocd-ingress
+  namespace: argocd
+  annotations:
+    # Disable SSL redirect for tunnel hosts
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # CRITICAL: Hostname forwarding headers for tunnel
+    nginx.ingress.kubernetes.io/proxy-set-headers: "true"
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    nginx.ingress.kubernetes.io/forwarded-for-header: "X-Forwarded-For"
+    nginx.ingress.kubernetes.io/forwarded-proto-header: "X-Forwarded-Proto"
+    nginx.ingress.kubernetes.io/forwarded-host-header: "X-Forwarded-Host"
+    # ArgoCD specific settings
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: argocd.gameapp.games
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  number: 80

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: humor-game-config
+  namespace: humor-game
+data:
+  NODE_ENV: "development"
+  DB_NAME: "humor_memory_game"
+  DB_USER: "gameuser"
+  REDIS_HOST: "redis"
+  REDIS_PORT: "6379"
+  API_PORT: "3001"
+  # Use the same nginx proxy pattern for both environments
+  CORS_ORIGIN: "http://localhost:3000,http://localhost:8080,https://gameapp.games"
+  FRONTEND_URL: "http://localhost:8080"
+  API_BASE_URL: "/api"
+

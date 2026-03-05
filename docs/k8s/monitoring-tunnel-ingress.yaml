@@ -1,0 +1,39 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monitoring-tunnel-ingress
+  namespace: monitoring
+  annotations:
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    # Ensure proper hostname handling for tunnel requests
+    nginx.ingress.kubernetes.io/proxy-set-headers: "true"
+    nginx.ingress.kubernetes.io/use-forwarded-headers: "true"
+    nginx.ingress.kubernetes.io/forwarded-for-header: "X-Forwarded-For"
+    nginx.ingress.kubernetes.io/forwarded-proto-header: "X-Forwarded-Proto"
+    nginx.ingress.kubernetes.io/forwarded-host-header: "X-Forwarded-Host"
+    # No SSL redirect for tunnel to prevent loops
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: prometheus.gameapp.games  # Single-level subdomain (covered by Universal SSL)
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: prometheus
+                port:
+                  number: 9090
+    
+    - host: grafana.gameapp.games  # Single-level subdomain (covered by Universal SSL)
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: grafana
+                port:
+                  number: 3000

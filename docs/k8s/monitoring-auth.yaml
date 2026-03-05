@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: monitoring-auth
+  namespace: monitoring
+type: Opaque
+data:
+  # Default credentials: admin/admin123
+  # Generate with: htpasswd -bn admin admin123 | base64 -w 0
+  auth: YWRt
+# Alternative: Create with htpasswd
+# kubectl create secret generic monitoring-auth --from-file=auth=htpasswd -n monitoring
