@@ -105,40 +105,40 @@ source ~/.bashrc
 ### Linux Systems
 | Component | Quick Access | Description |
 |-----------|--------------|-------------|
-| **Linux Commands** | [`linux/linux-commands.md`](linux/linux-commands.md) | Essential system diagnostics and troubleshooting |
+| **Linux Commands** | [`linux/linux-commands.md`](/docs/k8s/linux/linux-commands.md) | Essential system diagnostics and troubleshooting |
 
 ### Container Platforms
 | Platform | Quick Access | Key Features |
 |----------|--------------|--------------|
-| **Docker** | [`containers/docker-troubleshooting.md`](containers/docker-troubleshooting.md) | Container lifecycle, networking, volumes |
+| **Docker** | [`containers/docker-troubleshooting.md`](/docs/k8s/containers/docker-troubleshooting.md) | Container lifecycle, networking, volumes |
 
 ### Kubernetes
 | Component | Quick Access | Coverage |
 |-----------|--------------|----------|
-| **Kubernetes** | [`kubernetes/kubernetes-troubleshooting.md`](kubernetes/kubernetes-troubleshooting.md) | Cluster management, workloads, networking |
+| **Kubernetes** | [`kubernetes/kubernetes-troubleshooting.md`](/docs/k8s/kubernetes/kubernetes-troubleshooting.md) | Cluster management, workloads, networking |
 
 ### Cloud Providers
 | Provider | Quick Access | Specializations |
 |----------|--------------|-----------------|
-| **AWS** | [`cloud/aws-troubleshooting.md`](cloud/aws-troubleshooting.md) | EKS, Lambda, RDS, VPC troubleshooting |
-| **GCP** | [`cloud/gcp-troubleshooting.md`](cloud/gcp-troubleshooting.md) | GKE, Cloud Functions, networking |
-| **Azure** | [`cloud/azure-troubleshooting.md`](cloud/azure-troubleshooting.md) | AKS, App Services, resource groups |
-| **Multi-Cloud** | [`cloud/multi-cloud-strategies.md`](cloud/multi-cloud-strategies.md) | Cross-platform strategies |
+| **AWS** | [`cloud/aws-troubleshooting.md`](/docs/k8s/cloud/aws-troubleshooting.md) | EKS, Lambda, RDS, VPC troubleshooting |
+| **GCP** | [`cloud/gcp-troubleshooting.md`](/docs/k8s/cloud/gcp-troubleshooting.md) | GKE, Cloud Functions, networking |
+| **Azure** | [`cloud/azure-troubleshooting.md`](/docs/k8s/cloud/azure-troubleshooting.md) | AKS, App Services, resource groups |
+| **Multi-Cloud** | [`cloud/multi-cloud-strategies.md`](/docs/k8s/cloud/multi-cloud-strategies.md) | Cross-platform strategies |
 
 ### Databases
 | Database | Quick Access | Focus Areas |
 |----------|--------------|-------------|
-| **Database Troubleshooting** | [`databases/database-troubleshooting.md`](databases/database-troubleshooting.md) | Connection, performance, backup issues |
+| **Database Troubleshooting** | [`databases/database-troubleshooting.md`](/docs/k8s/databases/database-troubleshooting.md) | Connection, performance, backup issues |
 
 ### Observability
 | Tool | Quick Access | Coverage |
 |------|--------------|----------|
-| **Prometheus & Grafana** | [`observability/prometheus-and-grafana.md`](observability/prometheus-and-grafana.md) | Monitoring, alerting, dashboards |
+| **Prometheus & Grafana** | [`observability/prometheus-and-grafana.md`](/docs/k8s/observability/prometheus-and-grafana.md) | Monitoring, alerting, dashboards |
 
 ## Common Issues
 
 ### Critical System Issues
-[`linux/linux-commands.md`](linux/linux-commands.md)
+[`linux/linux-commands.md`](/docs/k8s/linux/linux-commands.md)
 
 #### High Load Average
 ```bash
@@ -175,7 +175,7 @@ journalctl --disk-usage
 ```
 
 ### Container Issues
-[`containers/docker-troubleshooting.md`](containers/docker-troubleshooting.md)
+[`containers/docker-troubleshooting.md`](/docs/k8s/containers/docker-troubleshooting.md)
 
 #### Container Won't Start
 ```bash
@@ -197,7 +197,7 @@ docker exec container_name netstat -tulpn
 ```
 
 ### Kubernetes Issues
-[`kubernetes/kubernetes-troubleshooting.md`](kubernetes/kubernetes-troubleshooting.md)
+[`kubernetes/kubernetes-troubleshooting.md`](/docs/k8s/kubernetes/kubernetes-troubleshooting.md)
 
 #### Pods Stuck in Pending
 ```bash
@@ -246,7 +246,7 @@ psql -h hostname -U username -c "SELECT 1"
 mongo --host hostname --eval "db.stats()"
 ```
 
-[`databases/database-troubleshooting.md`](databases/database-troubleshooting.md)
+[`databases/database-troubleshooting.md`](/docs/k8s/databases/database-troubleshooting.md)
 
 ## 📊 Troubleshooting Scenarios
 
