@@ -105,17 +105,17 @@ source ~/.bashrc
 ### Linux Systems
 | Component | Quick Access | Description |
 |-----------|--------------|-------------|
-| **Linux Commands** | [`linux/linux-commands.md`](/docs/k8s/linux/linux-commands.md) | Essential system diagnostics and troubleshooting |
+| **Linux Commands** | [`linux/linux-commands.md`](cvwc-devops/knowledge-base/docs/k8s/linux/linux-commands.md) | Essential system diagnostics and troubleshooting |
 
 ### Container Platforms
 | Platform | Quick Access | Key Features |
 |----------|--------------|--------------|
-| **Docker** | [`containers/docker-troubleshooting.md`](/docs/k8s/containers/docker-troubleshooting.md) | Container lifecycle, networking, volumes |
+| **Docker** | [`containers/docker-troubleshooting.md`](cvwc-devops/knowledge-base/docs/k8s/containers/docker-troubleshooting.md) | Container lifecycle, networking, volumes |
 
 ### Kubernetes
 | Component | Quick Access | Coverage |
 |-----------|--------------|----------|
-| **Kubernetes** | [`kubernetes/kubernetes-troubleshooting.md`](/docs/k8s/kubernetes/kubernetes-troubleshooting.md) | Cluster management, workloads, networking |
+| **Kubernetes** | [`kubernetes/kubernetes-troubleshooting.md`](cvwc-devops/knowledge-base/docs/k8s/kubernetes/kubernetes-troubleshooting.md) | Cluster management, workloads, networking |
 
 ### Cloud Providers
 | Provider | Quick Access | Specializations |
