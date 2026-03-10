@@ -105,7 +105,8 @@ source ~/.bashrc
 ### Linux Systems
 | Component | Quick Access | Description |
 |-----------|--------------|-------------|
-| **Linux Commands** | [`linux/linux-commands.md`](cvwc-devops/knowledge-base/docs/k8s/linux/linux-commands.md) | Essential system diagnostics and troubleshooting |
+| **Linux Commands** | [`linux/linux-commands.md`](/cvwc-devops/knowledge-base/docs/k8s/linux/linux-commands.md) | Essential system diagnostics and troubleshooting |
+
 
 ### Container Platforms
 | Platform | Quick Access | Key Features |
