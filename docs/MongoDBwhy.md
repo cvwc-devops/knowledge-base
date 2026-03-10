@@ -268,7 +268,7 @@ MongoDB scale risk is usually about schema and distribution choices made early: 
 
 PostgreSQL scale risk is usually about operational tuning as the system gets bigger: partitioning strategy, autovacuum, index bloat, replication design, and contention on hot rows. It tends to stay strong when data is relational and transactional, but it asks for more discipline around maintenance and write-heavy growth.
 
-![Side-by-side comparison](images/comparison.png)
+![Side-by-side comparison](https://github.com/cvwc-devops/knowledge-base/blob/main/images/comparison.png)
 
 ### Where MongoDB is lower risk
 
