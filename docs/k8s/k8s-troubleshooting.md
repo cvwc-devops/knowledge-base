@@ -110,30 +110,30 @@ source ~/.bashrc
 ### Container Platforms
 | Platform | Quick Access | Key Features |
 |----------|--------------|--------------|
-| **Docker** | [`containers/docker-troubleshooting.md`]([cvwc-devops/knowledge-base/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/containers/docker-troubleshooting.md) | Container lifecycle, networking, volumes |
+| **Docker** | [`containers/docker-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/containers/docker-troubleshooting.md) | Container lifecycle, networking, volumes |
 
 ### Kubernetes
 | Component | Quick Access | Coverage |
 |-----------|--------------|----------|
-| **Kubernetes** | [`kubernetes/kubernetes-troubleshooting.md`]([cvwc-devops/knowledge-base/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/kubernetes/kubernetes-troubleshooting.md) | Cluster management, workloads, networking |
+| **Kubernetes** | [`kubernetes/kubernetes-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/kubernetes/kubernetes-troubleshooting.md) | Cluster management, workloads, networking |
 
 ### Cloud Providers
 | Provider | Quick Access | Specializations |
 |----------|--------------|-----------------|
-| **AWS** | [`cloud/aws-troubleshooting.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/aws-troubleshooting.md) | EKS, Lambda, RDS, VPC troubleshooting |
-| **GCP** | [`cloud/gcp-troubleshooting.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/gcp-troubleshooting.md) | GKE, Cloud Functions, networking |
-| **Azure** | [`cloud/azure-troubleshooting.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/azure-troubleshooting.md) | AKS, App Services, resource groups |
-| **Multi-Cloud** | [`cloud/multi-cloud-strategies.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/multi-cloud-strategies.md) | Cross-platform strategies |
+| **AWS** | [`cloud/aws-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/aws-troubleshooting.md) | EKS, Lambda, RDS, VPC troubleshooting |
+| **GCP** | [`cloud/gcp-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/gcp-troubleshooting.md) | GKE, Cloud Functions, networking |
+| **Azure** | [`cloud/azure-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/azure-troubleshooting.md) | AKS, App Services, resource groups |
+| **Multi-Cloud** | [`cloud/multi-cloud-strategies.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/multi-cloud-strategies.md) | Cross-platform strategies |
 
 ### Databases
 | Database | Quick Access | Focus Areas |
 |----------|--------------|-------------|
-| **Database Troubleshooting** | [`databases/database-troubleshooting.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/databases/database-troubleshooting.md) | Connection, performance, backup issues |
+| **Database Troubleshooting** | [`databases/database-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/databases/database-troubleshooting.md) | Connection, performance, backup issues |
 
 ### Observability
 | Tool | Quick Access | Coverage |
 |------|--------------|----------|
-| **Prometheus & Grafana** | [`observability/prometheus-and-grafana.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/observability/prometheus-and-grafana.md) | Monitoring, alerting, dashboards |
+| **Prometheus & Grafana** | [`observability/prometheus-and-grafana.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/observability/prometheus-and-grafana.md) | Monitoring, alerting, dashboards |
 
 ## Common Issues
 
