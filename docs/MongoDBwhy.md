@@ -262,5 +262,24 @@ MongoDB can scale well, but only if growth is designed for early. The main risks
 The main architectural concerns at scale are shard key selection, bounded document design, array control, index discipline, working-set memory fit, schema governance, and recovery planning. Most MongoDB growth failures are not caused by raw data size alone. They come from design patterns that looked simple early on but break under production scale.
 
 ---
+## PostgreSQL vs MongoDB scale-risk comparison
 
+MongoDB scale risk is usually about schema and distribution choices made early: shard key selection, oversized documents, unbounded arrays, too many indexes, and overuse of $lookup. It can scale very well, but bad document-modeling decisions tend to surface later as costly performance and operations problems.
 
+PostgreSQL scale risk is usually about operational tuning as the system gets bigger: partitioning strategy, autovacuum, index bloat, replication design, and contention on hot rows. It tends to stay strong when data is relational and transactional, but it asks for more discipline around maintenance and write-heavy growth.
+
+![Side-by-side comparison](images/comparison.png)
+
+### Where MongoDB is lower risk
+
+MongoDB is usually lower risk when the workload is document-shaped, rapidly evolving, and naturally distributed, especially when the application mostly reads and writes complete objects rather than joining many related entities. In those cases, MongoDB can avoid some relational complexity. But that advantage depends on getting schema patterns, shard keys, and index discipline right early.
+
+### Where PostgreSQL is lower risk
+
+PostgreSQL is usually lower risk when the workload is transaction-heavy, relational, and correctness-sensitive. Its ACID model, mature SQL engine, partition pruning, and replication options make it a safer long-term default for systems like finance, orders, inventory, billing, and internal business systems. The tradeoff is that you must stay on top of vacuuming, indexing, and replication design as scale increases.
+
+### Bottom line
+
+**PostgreSQL’s** scale risks are mostly operational. **MongoDB’s** scale risks are mostly architectural. PostgreSQL usually degrades because maintenance and concurrency tuning get harder. MongoDB usually degrades because document and sharding decisions made early stop matching the workload later.
+
+**MongoDB** is strongest when the data model is truly document-centric and the team is prepared to design for sharding, bounded documents, and strict schema governance from day one.
