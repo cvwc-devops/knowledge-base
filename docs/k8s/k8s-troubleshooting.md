@@ -120,25 +120,25 @@ source ~/.bashrc
 ### Cloud Providers
 | Provider | Quick Access | Specializations |
 |----------|--------------|-----------------|
-| **AWS** | [`cloud/aws-troubleshooting.md`](/docs/k8s/cloud/aws-troubleshooting.md) | EKS, Lambda, RDS, VPC troubleshooting |
-| **GCP** | [`cloud/gcp-troubleshooting.md`](/docs/k8s/cloud/gcp-troubleshooting.md) | GKE, Cloud Functions, networking |
-| **Azure** | [`cloud/azure-troubleshooting.md`](/docs/k8s/cloud/azure-troubleshooting.md) | AKS, App Services, resource groups |
-| **Multi-Cloud** | [`cloud/multi-cloud-strategies.md`](/docs/k8s/cloud/multi-cloud-strategies.md) | Cross-platform strategies |
+| **AWS** | [`cloud/aws-troubleshooting.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/aws-troubleshooting.md) | EKS, Lambda, RDS, VPC troubleshooting |
+| **GCP** | [`cloud/gcp-troubleshooting.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/gcp-troubleshooting.md) | GKE, Cloud Functions, networking |
+| **Azure** | [`cloud/azure-troubleshooting.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/azure-troubleshooting.md) | AKS, App Services, resource groups |
+| **Multi-Cloud** | [`cloud/multi-cloud-strategies.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/cloud/multi-cloud-strategies.md) | Cross-platform strategies |
 
 ### Databases
 | Database | Quick Access | Focus Areas |
 |----------|--------------|-------------|
-| **Database Troubleshooting** | [`databases/database-troubleshooting.md`](/docs/k8s/databases/database-troubleshooting.md) | Connection, performance, backup issues |
+| **Database Troubleshooting** | [`databases/database-troubleshooting.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/databases/database-troubleshooting.md) | Connection, performance, backup issues |
 
 ### Observability
 | Tool | Quick Access | Coverage |
 |------|--------------|----------|
-| **Prometheus & Grafana** | [`observability/prometheus-and-grafana.md`](/docs/k8s/observability/prometheus-and-grafana.md) | Monitoring, alerting, dashboards |
+| **Prometheus & Grafana** | [`observability/prometheus-and-grafana.md`]([/docs/k8s](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s)/observability/prometheus-and-grafana.md) | Monitoring, alerting, dashboards |
 
 ## Common Issues
 
 ### Critical System Issues
-[`linux/linux-commands.md`](/docs/k8s/linux/linux-commands.md)
+[`linux/linux-commands.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/linux/linux-commands.md)
 
 #### High Load Average
 ```bash
@@ -175,7 +175,7 @@ journalctl --disk-usage
 ```
 
 ### Container Issues
-[`containers/docker-troubleshooting.md`](/docs/k8s/containers/docker-troubleshooting.md)
+[`containers/docker-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/containers/docker-troubleshooting.md)
 
 #### Container Won't Start
 ```bash
@@ -197,7 +197,7 @@ docker exec container_name netstat -tulpn
 ```
 
 ### Kubernetes Issues
-[`kubernetes/kubernetes-troubleshooting.md`](/docs/k8s/kubernetes/kubernetes-troubleshooting.md)
+[`kubernetes/kubernetes-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/kubernetes/kubernetes-troubleshooting.md)
 
 #### Pods Stuck in Pending
 ```bash
@@ -246,21 +246,21 @@ psql -h hostname -U username -c "SELECT 1"
 mongo --host hostname --eval "db.stats()"
 ```
 
-[`databases/database-troubleshooting.md`](/docs/k8s/databases/database-troubleshooting.md)
+[`databases/database-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/databases/database-troubleshooting.md)
 
 ## 📊 Troubleshooting Scenarios
 
 **Complete Troubleshooting Scenarios**
-[`scenarios/scenarios.md`](scenarios/scenarios.md)
+[`scenarios/scenarios.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/scenarios/scenarios.md)
 
 ## 🛠️ Useful Scripts
 
 ### Available Scripts
-- [`scripts/auto-clone-all-repos.sh`](scripts/auto-clone-all-repos.sh) - Clone all repositories from an organization
-- [`scripts/auto-pull-all-repos.sh`](scripts/auto-pull-all-repos.sh) - Update all local repositories
-- [`scripts/k8s-tailogs.sh`](scripts/k8s-tailogs.sh) - Stream logs from multiple Kubernetes pods
-- [`scripts/kubernetes-events.sh`](scripts/kubernetes-events.sh) - Monitor Kubernetes events in real-time
-- [`scripts/kubernetes-tools.sh`](scripts/kubernetes-tools.sh) - Install essential Kubernetes tools
+- [`scripts/auto-clone-all-repos.sh`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/scripts/auto-clone-all-repos.sh) - Clone all repositories from an organization
+- [`scripts/auto-pull-all-repos.sh`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/scripts/auto-pull-all-repos.sh) - Update all local repositories
+- [`scripts/k8s-tailogs.sh`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/scripts/k8s-tailogs.sh) - Stream logs from multiple Kubernetes pods
+- [`scripts/kubernetes-events.sh`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/scripts/kubernetes-events.sh) - Monitor Kubernetes events in real-time
+- [`scripts/kubernetes-tools.sh`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/scripts/kubernetes-tools.sh) - Install essential Kubernetes tools
 
 ### Usage Examples
 ```bash
@@ -354,16 +354,16 @@ curl -s http://localhost:9090/api/v1/targets | jq .
 # Grafana API health
 curl -H "Authorization: Bearer $GRAFANA_TOKEN" http://localhost:3000/api/health
 ```
-**Full Guide**: [`observability/prometheus-and-grafana.md`](observability/prometheus-and-grafana.md)
+**Full Guide**: [`observability/prometheus-and-grafana.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/observability/prometheus-and-grafana.md)
 
 ## 🔄 Recently Updated
 
 | File | Last Updated | Changes |
 |------|-------------|---------|
-| [`kubernetes/kubernetes-troubleshooting.md`](kubernetes/kubernetes-troubleshooting.md)  |
-| [`cloud/aws-troubleshooting.md`](cloud/aws-troubleshooting.md) |
-| [`observability/prometheus-and-grafana.md`](observability/prometheus-and-grafana.md) | 
-| [`scripts/kubernetes-tools.sh`](scripts/kubernetes-tools.sh) | 
+| [`kubernetes/kubernetes-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/kubernetes/kubernetes-troubleshooting.md)  |
+| [`cloud/aws-troubleshooting.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/cloud/aws-troubleshooting.md) |
+| [`observability/prometheus-and-grafana.md`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/observability/prometheus-and-grafana.md) | 
+| [`scripts/kubernetes-tools.sh`](https://github.com/cvwc-devops/knowledge-base/blob/main/docs/k8s/scripts/kubernetes-tools.sh) | 
 
 
 
