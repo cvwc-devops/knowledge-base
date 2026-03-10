@@ -67,3 +67,81 @@ You can also use open-source agent frameworks. Projects like OpenCode, Roo Code,
 
 You can plug your local Qwen or MiniMax model into a Claude-like CLI interface.
 
+----
+
+```
+Run Claude
+
+
+Download
+Curl -fsSL https://ollama.com/install.sh | sh
+
+ollama run gpt-oss
+olllama launch claude —model gpt-oss   OR  claude | codex | opencode | openclaw
+
+Download model:   gpt-oss:20b  or gemma3:12b
+
+
+How to Connect Ollama to Claude Code
+After downloading your model, test it inside Ollama.
+Open Ollama → Select your model (e.g., qwen3:8b) → Send a test message.
+
+In terminal : run “claude”
+
+Verify Ollama is running
+1- Paste this in your browser: localhost:11434.
+→ You should see: “Ollama is running”
+2- Open a new terminal.
+3- Customize your model, from the prompt below.
+
+ANTHROPIC_AUTH_TOKEN=ollama \
+ANTHROPIC_API_KEY="api-key-here" \
+ANTHROPIC_BASE_URL=http://localhost:11434 \
+claude --model gpt-oss:20b-cloud
+
+
+—
+
+How to connect Ollama to Claude Code using Cloud models
+
+
+The previous method works like magic.
+But there’s one bottleneck: your laptop’s power.
+If your PC isn't powerful enough (like mine, 16GB RAM, M1 chip), you're stuck with smaller models.
+Here’s the alternative: Ollama Cloud models.
+Still free. Way more powerful (up to 120B parameters).
+How to use Ollama Cloud?
+1- Visit here
+2- Click on keys
+3- Click on “API-keys.”
+4- Take your key and copy.
+5- Open a terminal, and paste this.
+ANTHROPIC_AUTH_TOKEN=ollama \
+ANTHROPIC_API_KEY="<paste-api-key-here" \
+ANTHROPIC_BASE_URL=http://localhost:11434 \
+claude --model gpt-oss:120b-cloud
+
+
+——
+
+Can You Build Real Apps? (Yes, Here’s How)
+
+
+Let’s test it with a real project.
+We'll build a Tetris game.
+Prompt Claude Code.
+hey can you please code a tetris game, save it into .py file and run it for   
+me     
+
+
+Claude will:
+1. Generate the code
+2. Ask permission to create tetris.py
+3. Run the game
+Here is the output in 2-3 minutes.
+
+
+
+Ref.  https://www.learnwithmeai.com/p/how-to-run-claude-code-locally-100
+
+```
