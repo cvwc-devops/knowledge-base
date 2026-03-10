@@ -101,7 +101,7 @@ kubectl exec $(kubectl get pods -l app=myapp -o jsonpath='{.items[0].metadata.na
 alert_threshold=$(curl -s http://metrics.com/thresholds | jq .cpu_alert)
 current_cpu=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | cut -d'%' -f1)
 [ ${current_cpu%.*} -gt $alert_threshold ] && \
-    slack-notify "🚨 CPU Alert: $current_cpu% (threshold: $alert_threshold%)"
+    slack-notify "CPU Alert: $current_cpu% (threshold: $alert_threshold%)"
 ```
 
 **Chain operations with validation**
@@ -117,7 +117,7 @@ if pod_name=$(kubectl get pods -l app=critical --no-headers 2>/dev/null); then
     echo "Found pod: $pod_name"
     kubectl describe pod $pod_name
 else
-    echo "❌ No pods found - check deployment status"
+    echo "No pods found - check deployment status"
     kubectl get deployments -l app=critical
 fi
 ```
