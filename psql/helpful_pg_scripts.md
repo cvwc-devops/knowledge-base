@@ -312,6 +312,141 @@ ORDER BY total_time DESC
 LIMIT 10;
 ```
 
+---
 
+## 1) PostgreSQL logs
 
+### A. Where logs are (depends on install)
+Systemd (most Linux distros)
+```
+journalctl -u postgresql
+```
+
+**Follow live:**
+```
+journalctl -u postgresql -f
+```
+> File-based logging (very common)
+
+**Check inside psql:**
+```
+SHOW log_directory;
+SHOW log_filename;
+SHOW data_directory;
+```
+
+**Typical paths:**
+- /var/lib/pgsql/14/data/log/
+- /var/log/postgresql/
+- /var/lib/postgresql/14/main/log/
+
+**Tail:**
+```
+tail -f /var/log/postgresql/postgresql-*.log
+```
+
+### B. Turn on useful logging (not noisy)
+In postgresql.conf:
+```
+logging_collector = on
+log_line_prefix = '%m [%p] %u@%d '
+log_min_duration_statement = 1000   # ms
+log_lock_waits = on
+deadlock_timeout = 1s
+```
+
+Reload is enough here:
+```
+SELECT pg_reload_conf();
+```
+
+> What you get
+> - Slow queries
+> - Lock waits + deadlocks
+> - PID you can immediately kill
+
+### C. Filter logs like an adult
+Examples:
+```
+grep -i "lock wait" postgresql.log
+grep -i "deadlock" postgresql.log
+grep -i "duration:" postgresql.log | sort -nr
+```
+
+## 2) bgwriter stats (IO + checkpoint pressure)
+### A. Current stats
+```
+SELECT * FROM pg_stat_bgwriter;
+```
+
+Key columns to watch:
+| Column | Meaning |
+| ------ | ------- |
+| checkpoints_timed | Normal scheduled checkpoints |
+| checkpoints_req | Forced checkpoints (bad if high) |
+| checkpoint_write_time | Time spent writing during checkpoints |
+| buffers_backend | Backends forced to write their own buffers |
+| buffers_backend_fsync | Backend fsyncs (very bad) |
+| buffers_alloc | Buffer churn |
+
+### B. Interpreting bgwriter pain (quick rules)
+🚨 High checkpoints_req
+- max_wal_size too small
+
+🚨 High buffers_backend
+- bgwriter can’t keep up
+- increase shared_buffers, tune bgwriter
+
+🚨 Any buffers_backend_fsync > 0
+- storage or checkpoint config problem
+- this should be ~0
+
+### C. Snapshot deltas (what matters)
+Raw counters are cumulative. Do this:
+```
+SELECT
+  now() AS ts,
+  checkpoints_timed,
+  checkpoints_req,
+  buffers_checkpoint,
+  buffers_backend,
+  buffers_clean,
+  buffers_alloc
+FROM pg_stat_bgwriter;
+```
+> Run it again 5–10 minutes later and compare deltas.
+
+### D. Reset counters (only when you mean it)
+```
+SELECT pg_stat_reset_shared('bgwriter');
+```
+> Do this before a load test or incident window.
+
+## 3) Glue logs + bgwriter together (real diagnosis)
+Pattern you’ll see
+- Logs show slow commits / lock waits
+- bgwriter shows:
+- - rising checkpoints_req
+- - rising buffers_backend
+
+> WAL or checkpoint pressure is stalling writers.
+
+## 4) Bonus: minimal “incident mode” config
+Use this temporarily during trouble:
+```
+log_min_duration_statement = 500
+log_lock_waits = on
+deadlock_timeout = 500ms
+```
+> Reload, observe, then roll back.
+
+---
+
+## TL;DR
+1️⃣ Logs (live) → identify PIDs, waits, slow queries
+2️⃣ pg_stat_bgwriter → see if IO / checkpoints are the root cause
+3️⃣ Correlate timestamps
+4️⃣ Fix config, then kill sessions
+
+---
 
