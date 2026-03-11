@@ -2,8 +2,8 @@
 
 > postgres-# FROM pg_stat_bgwriter; 
 
-| ts | checkpoints_timed | checkpoints_req | buffers_checkpoint | buffers_backend | buffers_clean | buffers_alloc |
-|------------------------------- | ------------------- | ----------------- | -------------------- | ----------------- | --------------- |
+| ts    | checkpoints_timed | checkpoints_req | buffers_checkpoint | buffers_backend | buffers_clean | buffers_alloc |
+|------ | ------------------- | ----------------- | -------------------- | ----------------- | --------------- | ------ |
 | 2025-12-19 11:39:58.621638+00 | 263 | 406 | 1641392 | 582202 | 10548 | 2625814 |
 | 2025-12-19 11:41:10.350832+00 | 263 | 410 | 1654640 | 582293 | 10630 | 2651905 |
 
