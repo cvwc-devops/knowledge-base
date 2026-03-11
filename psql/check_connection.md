@@ -50,8 +50,32 @@ Then Postgres might be up but not listening (or failed early and left a PID brie
 sudo -u postgres tail -n 200 /var/lib/pgsql/13/data/log/*.log
 ```
 
+---
 
+## If socket login still fails after uncommenting local ... peer
+Two common gotchas:
+### 1) Your command still uses TCP
+Make sure you don’t pass -h at all:
+```
+sudo -u postgres psql -c "select 1;"
+```
 
+### 2) Postgres is still down / stale pid file
 
+If it’s down, fix the postmaster.pid situation first (as discussed earlier), then start via systemd:
+```
+sudo systemctl start postgresql-13
+sudo journalctl -u postgresql-13 -n 80 --no-pager
+```
 
+**Quick note on your monitoring warning**
+> That [WARN] psql local query failed will go away if either:
+> - the check runs as postgres and uses socket (local ... peer), or
+> - it uses TCP with a real password (host ... scram-sha-256 + .pgpass).
 
+### 3) Last try.
+```
+sudo systemctl status postgresql-13 --no-pager
+sudo -u postgres psql -c "select 1;"   # after uncommenting local peer
+```
+---
