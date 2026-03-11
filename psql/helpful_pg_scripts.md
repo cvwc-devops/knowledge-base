@@ -443,10 +443,10 @@ deadlock_timeout = 500ms
 ---
 
 ## TL;DR
-1️⃣ Logs (live) → identify PIDs, waits, slow queries
-2️⃣ pg_stat_bgwriter → see if IO / checkpoints are the root cause
-3️⃣ Correlate timestamps
-4️⃣ Fix config, then kill sessions
+- 1️⃣ Logs (live) → identify PIDs, waits, slow queries
+- 2️⃣ pg_stat_bgwriter → see if IO / checkpoints are the root cause
+- 3️⃣ Correlate timestamps
+- 4️⃣ Fix config, then kill sessions
 
 ---
 
