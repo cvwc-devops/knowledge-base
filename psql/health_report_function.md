@@ -840,7 +840,7 @@ CREATE TABLE IF NOT EXISTS public.db_health_rollup (
 
 Then after each DB run, pull the summary and insert into the central DB:
 - Orchestrator queries each target DB:
-- ```
+```
 SELECT * FROM health.run_health_summary();
 ```
 - Orchestrator inserts that row into the central DB.
@@ -851,7 +851,6 @@ SELECT * FROM health.run_health_summary();
 ## Recommended push design (postgres_fdw)
 **Central DB (the only exposed DB)**
 1) Create a tiny “ingest-only” role and rollup table:
-
 ```sql
 CREATE ROLE health_ingest LOGIN PASSWORD 'ROTATE_ME';
 CREATE TABLE IF NOT EXISTS public.db_health_rollup (
