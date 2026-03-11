@@ -851,9 +851,9 @@ SELECT * FROM health.run_health_summary();
 ## Recommended push design (postgres_fdw)
 **Central DB (the only exposed DB)**
 1) Create a tiny “ingest-only” role and rollup table:
+
 ```sql
 CREATE ROLE health_ingest LOGIN PASSWORD 'ROTATE_ME';
-
 CREATE TABLE IF NOT EXISTS public.db_health_rollup (
   observed_at     timestamptz NOT NULL,
   source_cluster  text        NOT NULL,
@@ -866,7 +866,6 @@ CREATE TABLE IF NOT EXISTS public.db_health_rollup (
   total_count     int         NOT NULL,
   PRIMARY KEY (source_cluster, source_db, run_id)
 );
-
 GRANT INSERT ON public.db_health_rollup TO health_ingest;
 REVOKE ALL ON public.db_health_rollup FROM PUBLIC;
 ```
