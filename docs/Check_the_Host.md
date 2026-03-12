@@ -293,7 +293,7 @@ Reason:</br>
 •	Hash join now cheaper than repeated nested loop lookups</br>
 •	Execution time drops significantly for large tables</br>
 
-**How the planner estimates cost**
+**How the planner estimates cost**</br>
 •	It calculates hash table memory = #rows × row width × overhead</br>
 •	If estimated size > work_mem, it adds spill cost</br>
 •	If cost of spilling > nested loop cost, nested loop wins</br>
