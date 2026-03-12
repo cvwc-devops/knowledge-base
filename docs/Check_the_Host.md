@@ -202,11 +202,11 @@ Example:
 ```
 mymap   linuxuser   dbuser
 ```
-**Common Gotchas**
-✔ User exists but cannot connect → check pg_hba.conf
-✔ User can connect but no access to tables → GRANT privileges
-✔ Remote connection fails → listen_addresses + firewall
-✔ Password auth not working → auth method mismatch (md5 vs scram-sha-256)
+**Common Gotchas**</br>
+✔ User exists but cannot connect → check pg_hba.conf</br>
+✔ User can connect but no access to tables → GRANT privileges</br>
+✔ Remote connection fails → listen_addresses + firewall</br>
+✔ Password auth not working → auth method mismatch (md5 vs scram-sha-256)</br>
 
 ## PostgreSQL Query 
 ### SQL fundamentals
@@ -265,38 +265,38 @@ JOIN customers c ON c.id = o.customer_id
 WHERE o.id = 42;
 ```
 
-**Other**
-Forcing hash-join
-SET enable_nestloop = off;
+**Other**</br>
+Forcing hash-join</br>
+SET enable_nestloop = off;</br>
 
-**What work_mem does**
-	•	work_mem is the memory PostgreSQL allocates per operation, per query.
-	•	Hash joins build a hash table in memory using this memory.
-	•	If the hash table won’t fit in work_mem, PostgreSQL may:
-	1.	Spill it to disk (slower)
-	2.	Avoid hash join entirely and choose a nested loop or merge join
+**What work_mem does**</br>
+	•	work_mem is the memory PostgreSQL allocates per operation, per query.</br>
+	•	Hash joins build a hash table in memory using this memory.</br>
+	•	If the hash table won’t fit in work_mem, PostgreSQL may:</br>
+	1.	Spill it to disk (slower)</br>
+	2.	Avoid hash join entirely and choose a nested loop or merge join</br>
 
-So, larger work_mem → hash joins become cheaper.
-Smaller work_mem → nested loops may be preferred.
+So, larger work_mem → hash joins become cheaper.</br>
+Smaller work_mem → nested loops may be preferred.</br>
 
-SET work_mem = '64kB';  -- tiny
-Nested Loop is considered as work_mem is tiny and not in MB or GB sizing 
+SET work_mem = '64kB';  -- tiny</br>
+Nested Loop is considered as work_mem is tiny and not in MB or GB sizing </br>
 
-**Reason:**
-•	Hash join requires a hash table of several MB or GB
-•	64kB is too small → hash join would spill
-•	Planner thinks nested loop is cheaper
+**Reason:**</br>
+•	Hash join requires a hash table of several MB or GB</br>
+•	64kB is too small → hash join would spill</br>
+•	Planner thinks nested loop is cheaper</br>
 
-SET work_mem = '64MB'; 
-Reason:
-•	64MB can hold the hash table in memory
-•	Hash join now cheaper than repeated nested loop lookups
-•	Execution time drops significantly for large tables
+SET work_mem = '64MB'; </br>
+Reason:</br>
+•	64MB can hold the hash table in memory</br>
+•	Hash join now cheaper than repeated nested loop lookups</br>
+•	Execution time drops significantly for large tables</br>
 
 **How the planner estimates cost**
-•	It calculates hash table memory = #rows × row width × overhead
-•	If estimated size > work_mem, it adds spill cost
-•	If cost of spilling > nested loop cost, nested loop wins
+•	It calculates hash table memory = #rows × row width × overhead</br>
+•	If estimated size > work_mem, it adds spill cost</br>
+•	If cost of spilling > nested loop cost, nested loop wins</br>
 
 
 Example:
@@ -316,26 +316,27 @@ WHERE c.country = 'US';
 **What is a partial index?**
 
 A partial index is an index built on a subset of a table, defined by a WHERE condition:
-
+```sql
 CREATE INDEX idx_orders_recent
 ON orders(created_at)
 WHERE created_at >= now() - interval '30 days';
+```
 
 **The table is very large but only a small subset is queried**
 
-Example:
-•	orders table: 50 million rows
-•	Only last 30 days are queried
-•	Partial index contains 500,000 rows → 1% of table
+Example:</br>
+•	orders table: 50 million rows</br>
+•	Only last 30 days are queried</br>
+•	Partial index contains 500,000 rows → 1% of table</br>
 
-Here:
-•	Partial index scan: tiny and fast
-•	Full index scan: larger, more I/O, more cache pressure
+Here:</br>
+•	Partial index scan: tiny and fast</br>
+•	Full index scan: larger, more I/O, more cache pressure</br>
 
-**Reduced maintenance cost**
-	•	Updates/inserts only affect rows that satisfy the WHERE condition.
-	•	Full index would need updates for every insert/update.
-	•	Partial index → smaller, cheaper to maintain, less WAL/log overhead 
+**Reduced maintenance cost**</br>
+	•	Updates/inserts only affect rows that satisfy the WHERE condition.</br>
+	•	Full index would need updates for every insert/update.</br>
+	•	Partial index → smaller, cheaper to maintain, less WAL/log overhead </br>
 
 A partial index beats a full index when your query consistently filters on a small, predictable subset of the table. Smaller index = faster scans + lower maintenance.
 
@@ -421,19 +422,19 @@ FROM users
 WHERE tags @> ARRAY['premium'];
 ```
 
-Why not B-tree?
-	•	B-tree indexes only work for single-value comparisons (like = or <).
-	•	B-tree cannot efficiently handle:
-	•	Multi-key columns (jsonb, arrays)
-	•	Containment (@>), existence (?), or full-text search
-	•	GIN solves this problem by indexing every element inside a value.
+Why not B-tree?</br>
+	•	B-tree indexes only work for single-value comparisons (like = or <).</br>
+	•	B-tree cannot efficiently handle:</br>
+	•	Multi-key columns (jsonb, arrays)</br>
+	•	Containment (@>), existence (?), or full-text search</br>
+	•	GIN solves this problem by indexing every element inside a value.</br>
 
-Considerations
-	•	GIN indexes are slower to update than B-tree.
-	•	Inserting/updating rows is more expensive.
-	•	But read queries become much faster for multi-key searches.
-	•	For very large tables or read-heavy workloads, GIN is usually a win.
-	•	Partial GIN indexes can further reduce size if queries only focus on a subset.
+Considerations</br>
+	•	GIN indexes are slower to update than B-tree.</br>
+	•	Inserting/updating rows is more expensive.</br>
+	•	But read queries become much faster for multi-key searches.</br>
+	•	For very large tables or read-heavy workloads, GIN is usually a win.</br>
+	•	Partial GIN indexes can further reduce size if queries only focus on a subset.</br>
 
 Use a GIN index when you need to efficiently query multi-value, nested, or full-text data.
 B-tree is great for single values; GIN is for containment and existence searches inside complex types.
@@ -449,63 +450,62 @@ WHERE data @> '{"type": "purchase"}';
 
 ## Decision-Making Under Ambiguity
 
-When unsure:
-	1.	Inspect before acting
-	2.	Prefer reversible actions
-	3.	Document assumptions
+When unsure:</br>
+	1.	Inspect before acting</br>
+	2.	Prefer reversible actions</br>
+	3.	Document assumptions</br>
 
-Example:
+Example:</br>
 
-“Disk almost full”
-
-	•	First: du -sh /var/*
-	•	Check logs before deleting
-	•	Compress or rotate, not blindly remove
+“Disk almost full”</br>
+	•	First: du -sh /var/*</br>
+	•	Check logs before deleting</br>
+	•	Compress or rotate, not blindly remove</br>
 
 ## Time Management Strategy (Critical)
 
-Suggested workflow during the exercise
-	1.	5–10 min: Read everything, write a task list
-	2.	Do easy wins first
-	3.	Parallelize thinking (while queries run, document)
-	4.	Leave 15–20 min for reporting
+Suggested workflow during the exercise</br>
+	1.	5–10 min: Read everything, write a task list</br>
+	2.	Do easy wins first</br>
+	3.	Parallelize thinking (while queries run, document)</br>
+	4.	Leave 15–20 min for reporting</br>
 
-If something blocks you:
-	•	Document the issue
-	•	State what you would do next
+If something blocks you:</br>
+	•	Document the issue</br>
+	•	State what you would do next</br>
 
 ## Report structure
 
-1. Overview
-2. System Administration Tasks
-   - What was requested
-   - What was done
-   - Commands used
-   - Result
-3. PostgreSQL Administration
-4. Query Work
-   - Original issue
-   - Changes made
-   - Performance impact
-5. Issues / Risks / Assumptions
-6. Recommendations
+1. Overview</br>
+2. System Administration Tasks</br>
+   - What was requested</br>
+   - What was done</br>
+   - Commands used</br>
+   - Result</br>
+3. PostgreSQL Administration</br>
+4. Query Work</br>
+   - Original issue</br>
+   - Changes made</br>
+   - Performance impact</br>
+5. Issues / Risks / Assumptions</br>
+6. Recommendations</br>
 
 ---
 
 ## Practice
-	•	Launch an EC2 or local Linux VM
-	•	SSH using key auth
-	•	Install PostgreSQL
-	•	Create DB, user, tables
-	•	Write 3 joins + indexes
-	•	Break Postgres → fix it
-	•	Write a 1-page report
+	•	Launch an EC2 or local Linux VM</br>
+	•	SSH using key auth</br>
+	•	Install PostgreSQL</br>
+	•	Create DB, user, tables</br>
+	•	Write 3 joins + indexes</br>
+	•	Break Postgres → fix it</br>
+	•	Write a 1-page report</br>
 
 ## Mindset
-	•	Calm troubleshooting
-	•	Clean thinking
-	•	Safe changes
-	•	Clear communication
+	•	Calm troubleshooting</br>
+	•	Clean thinking</br>
+	•	Safe changes</br>
+	•	Clear communication</br>
 
 ---
 
