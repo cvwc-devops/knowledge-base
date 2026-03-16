@@ -6,3 +6,4 @@ generate a image of with text, image and QR code using this text  “I need Help
 <!doctype html><meta charset=utf-8><body style="margin:0;display:grid;place-items:center;height:100vh;font:48px Arial">I need Help
 ```
 
+But this only works, if the reading device understands the "data:" url
