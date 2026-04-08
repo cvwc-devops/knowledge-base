@@ -2,42 +2,46 @@
 
 This is the shortest practical path:
 
-Azure Ubuntu VM
-Azure Database for PostgreSQL Flexible Server
-Docker Compose
-Caddy for HTTPS
-Public DNS name like n8n.example.com
-1) Create Azure resources
+- Azure Ubuntu VM
+- Azure Database for PostgreSQL Flexible Server
+- Docker Compose
+- Caddy for HTTPS
+- Public DNS name like n8n.example.com
+
+## 1) Create Azure resources
 
 Create these first:
-
-Ubuntu VM in Azure
-PostgreSQL Flexible Server
-DNS A record for n8n.example.com pointing to the VM public IP
+- Ubuntu VM in Azure
+- PostgreSQL Flexible Server
+- DNS A record for n8n.example.com pointing to the VM public IP
 
 Open these VM ports in the NSG:
+- 22
+- 80
+- 443
 
-22
-80
-443
-
-Useful URLs:
+## Useful URLs:
 
 Azure VM quickstart
-https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal
+- https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal
 
 Azure PostgreSQL Flexible Server quickstart
-https://learn.microsoft.com/en-us/azure/postgresql/configure-maintain/quickstart-create-server
+- https://learn.microsoft.com/en-us/azure/postgresql/configure-maintain/quickstart-create-server
 
 Azure DNS quickstart
-https://learn.microsoft.com/en-us/azure/dns/dns-getstarted-portal
+- https://learn.microsoft.com/en-us/azure/dns/dns-getstarted-portal
 
 Azure NSG docs
-https://learn.microsoft.com/en-us/azure/virtual-network/manage-network-security-group
-2) SSH into the VM
+- https://learn.microsoft.com/en-us/azure/virtual-network/manage-network-security-group
+
+## 2) SSH into the VM
+'''
 ssh azureuser@YOUR_VM_PUBLIC_IP
 sudo apt update && sudo apt upgrade -y
-3) Install Docker
+'''
+
+## 3) Install Docker
+'''
 sudo apt update
 sudo apt install -y ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -55,30 +59,38 @@ EOF
 
 sudo apt update
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+'''
 
 Check it:
-
+'''
 sudo systemctl status docker
 sudo docker run hello-world
 docker compose version
+'''
 
-URL:
-
+## URL:
 Docker Ubuntu install
-https://docs.docker.com/engine/install/ubuntu/
-4) Create the n8n folder
+- https://docs.docker.com/engine/install/ubuntu/
+
+## 4) Create the n8n folder
+'''
 mkdir -p ~/n8n
 cd ~/n8n
-5) Generate an encryption key
+'''
+
+## 5) Generate an encryption key
+'''
 openssl rand -hex 32
-
 Save the output.
+'''
 
-6) Create the .env file
+## 7) Create the .env file
+'''
 nano .env
+'''
 
 Paste this and replace the placeholders:
-
+'''
 N8N_HOST=n8n.example.com
 N8N_PROTOCOL=https
 WEBHOOK_URL=https://n8n.example.com/
@@ -101,25 +113,30 @@ DB_POSTGRESDB_PASSWORD=YOUR_PG_PASSWORD
 DB_POSTGRESDB_SCHEMA=public
 DB_POSTGRESDB_SSL_ENABLED=true
 DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false
+'''
 
-Useful URLs:
+## Useful URLs:
 
 n8n Docker install
-https://docs.n8n.io/hosting/installation/docker/
+- https://docs.n8n.io/hosting/installation/docker/
 
 n8n database environment variables
-https://docs.n8n.io/hosting/configuration/environment-variables/database/
+- https://docs.n8n.io/hosting/configuration/environment-variables/database/
 
 n8n deployment environment variables
-https://docs.n8n.io/hosting/configuration/environment-variables/deployment/
+- https://docs.n8n.io/hosting/configuration/environment-variables/deployment/
 
 n8n reverse proxy / webhook URL
-https://docs.n8n.io/hosting/configuration/configuration-examples/webhook-url/
-7) Create docker-compose.yml
+- https://docs.n8n.io/hosting/configuration/configuration-examples/webhook-url/
+
+## 7) Create docker-compose.yml
+'''
 nano docker-compose.yml
+'''
 
 Paste this:
 
+'''
 services:
   n8n:
     image: docker.n8n.io/n8nio/n8n:latest
@@ -134,80 +151,100 @@ services:
 
 volumes:
   n8n_data:
-8) Start n8n
+'''
+
+## 8) Start n8n
+'''
 docker compose up -d
 docker compose logs -f
+'''
 
 Check:
-
+'''
 docker ps
 curl -I http://127.0.0.1:5678
-9) Install Caddy
+'''
+
+## 9) Install Caddy
+'''
 sudo apt update
 sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
 sudo apt update
 sudo apt install -y caddy
+'''
 
 URL:
 
 Caddy automatic HTTPS
-https://caddyserver.com/docs/automatic-https
+- https://caddyserver.com/docs/automatic-https
+
 10) Configure Caddy
-sudo nano /etc/caddy/Caddyfile
+- sudo nano /etc/caddy/Caddyfile
 
 Paste:
-
+'''
 n8n.example.com {
     reverse_proxy 127.0.0.1:5678
 }
+'''
 
 Restart:
-
+'''
 sudo systemctl restart caddy
 sudo systemctl status caddy
+'''
 
 URL:
 
 Caddy reverse proxy quick start
-https://caddyserver.com/docs/quick-starts/reverse-proxy
-11) Open n8n
+- https://caddyserver.com/docs/quick-starts/reverse-proxy
+
+## 11) Open n8n
 
 Visit:
-
-https://n8n.example.com
+- https://n8n.example.com
 
 If the page loads, finish the first-run setup in the browser.
 
-12) Test a webhook
+## 12) Test a webhook
 
 Create a workflow with a Webhook node, then test it.
 
 Example:
-
+'''
 curl -X GET "https://n8n.example.com/webhook-test/hello"
+'''
 
 If the webhook URL is wrong, re-check:
-
+'''
 WEBHOOK_URL=https://n8n.example.com/
 N8N_PROXY_HOPS=1
 N8N_PROTOCOL=https
 N8N_HOST=n8n.example.com
-13) Update n8n later
+'''
+
+## 13) Update n8n later
+'''
 cd ~/n8n
 docker compose pull
 docker compose down
 docker compose up -d
 14) Back up these items
+'''
 
 Back up:
 
 PostgreSQL database
 Docker volume for /home/node/.n8n
+'''
 .env
 /etc/caddy/Caddyfile
+'''
+
 Full file set
+'''
 .env
 N8N_HOST=n8n.example.com
 N8N_PROTOCOL=https
@@ -231,7 +268,10 @@ DB_POSTGRESDB_PASSWORD=YOUR_PG_PASSWORD
 DB_POSTGRESDB_SCHEMA=public
 DB_POSTGRESDB_SSL_ENABLED=true
 DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false
+'''
+
 docker-compose.yml
+'''
 services:
   n8n:
     image: docker.n8n.io/n8nio/n8n:latest
@@ -246,49 +286,54 @@ services:
 
 volumes:
   n8n_data:
+'''
+
 /etc/caddy/Caddyfile
+'''
 n8n.example.com {
     reverse_proxy 127.0.0.1:5678
 }
-Useful URLs
+'''
+
+## Useful URLs
 n8n docs
-https://docs.n8n.io/
+- https://docs.n8n.io/
 
 n8n Docker install
-https://docs.n8n.io/hosting/installation/docker/
+- https://docs.n8n.io/hosting/installation/docker/
 
 n8n Azure guide
-https://docs.n8n.io/hosting/installation/server-setups/azure/
+- https://docs.n8n.io/hosting/installation/server-setups/azure/
 
 n8n database env vars
-https://docs.n8n.io/hosting/configuration/environment-variables/database/
+- https://docs.n8n.io/hosting/configuration/environment-variables/database/
 
 n8n deployment env vars
-https://docs.n8n.io/hosting/configuration/environment-variables/deployment/
+- https://docs.n8n.io/hosting/configuration/environment-variables/deployment/
 
 n8n webhook URL / reverse proxy
-https://docs.n8n.io/hosting/configuration/configuration-examples/webhook-url/
+- https://docs.n8n.io/hosting/configuration/configuration-examples/webhook-url/
 
 Docker on Ubuntu
-https://docs.docker.com/engine/install/ubuntu/
+- https://docs.docker.com/engine/install/ubuntu/
 
 Azure VM quickstart
-https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal
+- https://learn.microsoft.com/en-us/azure/virtual-machines/linux/quick-create-portal
 
 Azure PostgreSQL quickstart
-https://learn.microsoft.com/en-us/azure/postgresql/configure-maintain/quickstart-create-server
+- https://learn.microsoft.com/en-us/azure/postgresql/configure-maintain/quickstart-create-server
 
 Azure DNS quickstart
-https://learn.microsoft.com/en-us/azure/dns/dns-getstarted-portal
+- https://learn.microsoft.com/en-us/azure/dns/dns-getstarted-portal
 
 Azure NSG docs
-https://learn.microsoft.com/en-us/azure/virtual-network/manage-network-security-group
+- https://learn.microsoft.com/en-us/azure/virtual-network/manage-network-security-group
 
 Caddy automatic HTTPS
-https://caddyserver.com/docs/automatic-https
+- https://caddyserver.com/docs/automatic-https
 
 Caddy reverse proxy
-https://caddyserver.com/docs/quick-starts/reverse-proxy
+- https://caddyserver.com/docs/quick-starts/reverse-proxy
 
 
 ## Single Bash Install Script: n8n on Azure VM
@@ -307,12 +352,14 @@ a DNS A record like n8n.example.com pointing to the VM public IP
 NSG rules allowing 22, 80, and 443
 
 Have these values ready:
-
+'''
 DOMAIN like n8n.example.com
 PG_HOST like myserver.postgres.database.azure.com
 PG_DATABASE
 PG_USER
 PG_PASSWORD
+'''
+
 The script
 
 ### Save this as install-n8n-azure.sh:
