@@ -36,36 +36,36 @@ Azure NSG docs
 
 ## 2) SSH into the VM
 '''
-ssh azureuser@YOUR_VM_PUBLIC_IP
-sudo apt update && sudo apt upgrade -y
+<br>ssh azureuser@YOUR_VM_PUBLIC_IP<br>
+sudo apt update && sudo apt upgrade -y<br>
 '''
 
 ## 3) Install Docker
 '''
-sudo apt update
-sudo apt install -y ca-certificates curl
-sudo install -m 0755 -d /etc/apt/keyrings
-sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-sudo chmod a+r /etc/apt/keyrings/docker.asc
+<br>sudo apt update<br>
+sudo apt install -y ca-certificates curl<br>
+sudo install -m 0755 -d /etc/apt/keyrings<br>
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc<br>
+sudo chmod a+r /etc/apt/keyrings/docker.asc<br>
+<br>
+sudo tee /etc/apt/sources.list.d/docker.sources > /dev/null <<'EOF'<br>
+Types: deb<br>
+URIs: https://download.docker.com/linux/ubuntu<br>
+Suites: jammy<br>
+Components: stable<br>
+Architectures: amd64<br>
+Signed-By: /etc/apt/keyrings/docker.asc<br>
+EOF<br>
 
-sudo tee /etc/apt/sources.list.d/docker.sources > /dev/null <<'EOF'
-Types: deb
-URIs: https://download.docker.com/linux/ubuntu
-Suites: jammy
-Components: stable
-Architectures: amd64
-Signed-By: /etc/apt/keyrings/docker.asc
-EOF
-
-sudo apt update
-sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt update<br>
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin<br>
 '''
 
 Check it:
 '''
-sudo systemctl status docker
-sudo docker run hello-world
-docker compose version
+sudo systemctl status docker<br>
+sudo docker run hello-world<br>
+docker compose version<br>
 '''
 
 ## URL:
@@ -74,45 +74,45 @@ Docker Ubuntu install
 
 ## 4) Create the n8n folder
 '''
-mkdir -p ~/n8n
-cd ~/n8n
+mkdir -p ~/n8n<br>
+cd ~/n8n<br>
 '''
 
 ## 5) Generate an encryption key
 '''
-openssl rand -hex 32
-Save the output.
+openssl rand -hex 32<br>
+Save the output.<br>
 '''
 
 ## 7) Create the .env file
 '''
-nano .env
+nano .env<br>
 '''
 
 Paste this and replace the placeholders:
 '''
-N8N_HOST=n8n.example.com
-N8N_PROTOCOL=https
-WEBHOOK_URL=https://n8n.example.com/
-N8N_EDITOR_BASE_URL=https://n8n.example.com/
-N8N_PROXY_HOPS=1
-
-N8N_PORT=5678
-N8N_ENCRYPTION_KEY=PASTE_YOUR_GENERATED_KEY
-GENERIC_TIMEZONE=Europe/Dublin
-TZ=Europe/Dublin
-N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
-N8N_RUNNERS_ENABLED=true
-
-DB_TYPE=postgresdb
-DB_POSTGRESDB_HOST=YOUR_PG_SERVER.postgres.database.azure.com
-DB_POSTGRESDB_PORT=5432
-DB_POSTGRESDB_DATABASE=n8n
-DB_POSTGRESDB_USER=YOUR_PG_USER
-DB_POSTGRESDB_PASSWORD=YOUR_PG_PASSWORD
-DB_POSTGRESDB_SCHEMA=public
-DB_POSTGRESDB_SSL_ENABLED=true
-DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false
+<br>N8N_HOST=n8n.example.com<br>
+N8N_PROTOCOL=https<br>
+WEBHOOK_URL=https://n8n.example.com/<br>
+N8N_EDITOR_BASE_URL=https://n8n.example.com/<br>
+N8N_PROXY_HOPS=1<br>
+<br>
+N8N_PORT=5678<br>
+N8N_ENCRYPTION_KEY=PASTE_YOUR_GENERATED_KEY<br>
+GENERIC_TIMEZONE=Europe/Dublin<br>
+TZ=Europe/Dublin<br>
+N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true<br>
+N8N_RUNNERS_ENABLED=true<br>
+<br>
+DB_TYPE=postgresdb<br>
+DB_POSTGRESDB_HOST=YOUR_PG_SERVER.postgres.database.azure.com<br>
+DB_POSTGRESDB_PORT=5432<br>
+DB_POSTGRESDB_DATABASE=n8n<br>
+DB_POSTGRESDB_USER=YOUR_PG_USER<br>
+DB_POSTGRESDB_PASSWORD=YOUR_PG_PASSWORD<br>
+DB_POSTGRESDB_SCHEMA=public<br>
+DB_POSTGRESDB_SSL_ENABLED=true<br>
+DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false<br>
 '''
 
 ## Useful URLs:
