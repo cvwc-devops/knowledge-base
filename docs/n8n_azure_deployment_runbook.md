@@ -59,10 +59,9 @@ EOF<br>
 
 sudo apt update<br>
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin<br>
-'''
 
-Check it:
-'''
+<br>Check it:<br>
+
 sudo systemctl status docker<br>
 sudo docker run hello-world<br>
 docker compose version<br>
