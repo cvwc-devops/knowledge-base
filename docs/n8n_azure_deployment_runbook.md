@@ -432,92 +432,92 @@ apt-get install -y ca-certificates curl gnupg lsb-release debian-keyring debian-
 # Docker install
 ########################################
 log "Installing Docker repository"
-install -m 0755 -d /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-chmod a+r /etc/apt/keyrings/docker.asc
-
+install -m 0755 -d /etc/apt/keyrings<br>
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc<br>
+chmod a+r /etc/apt/keyrings/docker.asc<br>
+<br>
 cat >/etc/apt/sources.list.d/docker.sources <<EOF
-Types: deb
-URIs: https://download.docker.com/linux/ubuntu
-Suites: ${UBUNTU_CODENAME}
-Components: stable
-Architectures: amd64
-Signed-By: /etc/apt/keyrings/docker.asc
+Types: deb<br>
+URIs: https://download.docker.com/linux/ubuntu<br>
+Suites: ${UBUNTU_CODENAME}<br>
+Components: stable<br>
+Architectures: amd64<br>
+Signed-By: /etc/apt/keyrings/docker.asc<br>
 EOF
 
 log "Installing Docker Engine and Compose plugin"
-apt-get update
-apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-systemctl enable docker
-systemctl start docker
+apt-get update<br>
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin<br>
+<br>
+systemctl enable docker<br>
+systemctl start docker<br>
 
 ########################################
 # Caddy install
 ########################################
-log "Installing Caddy repository"
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' > /etc/apt/sources.list.d/caddy-stable.list
-
-log "Installing Caddy"
-apt-get update
-apt-get install -y caddy
+log "Installing Caddy repository"<br>
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg<br>
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' > /etc/apt/sources.list.d/caddy-stable.list<br>
+<br>
+log "Installing Caddy"<br>
+apt-get update<br>
+apt-get install -y caddy<br>
 
 ########################################
 # n8n files
 ########################################
-log "Creating n8n directory at ${N8N_DIR}"
-mkdir -p "${N8N_DIR}"
-cd "${N8N_DIR}"
+log "Creating n8n directory at ${N8N_DIR}"<br>
+mkdir -p "${N8N_DIR}"<br>
+cd "${N8N_DIR}"<br>
 
-log "Writing .env"
-cat > "${N8N_DIR}/.env" <<EOF
-N8N_HOST=${DOMAIN}
-N8N_PROTOCOL=https
-WEBHOOK_URL=https://${DOMAIN}/
-N8N_EDITOR_BASE_URL=https://${DOMAIN}/
-N8N_PROXY_HOPS=1
-
-N8N_PORT=5678
-N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
-GENERIC_TIMEZONE=${TIMEZONE}
-TZ=${TIMEZONE}
-N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
-N8N_RUNNERS_ENABLED=true
-
-DB_TYPE=postgresdb
-DB_POSTGRESDB_HOST=${PG_HOST}
-DB_POSTGRESDB_PORT=${PG_PORT}
-DB_POSTGRESDB_DATABASE=${PG_DATABASE}
-DB_POSTGRESDB_USER=${PG_USER}
-DB_POSTGRESDB_PASSWORD=${PG_PASSWORD}
-DB_POSTGRESDB_SCHEMA=public
-DB_POSTGRESDB_SSL_ENABLED=true
-DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false
-EOF
-
-chmod 600 "${N8N_DIR}/.env"
-
-log "Writing docker-compose.yml"
-cat > "${N8N_DIR}/docker-compose.yml" <<EOF
-services:
-  n8n:
-    image: docker.n8n.io/n8nio/n8n:${N8N_VERSION}
-    container_name: n8n
-    restart: unless-stopped
-    env_file:
-      - .env
-    ports:
-      - "127.0.0.1:5678:5678"
-    volumes:
-      - n8n_data:/home/node/.n8n
-
-volumes:
-  n8n_data:
-EOF
-
-log "Starting n8n"
-docker compose -f "${N8N_DIR}/docker-compose.yml" up -d
+log "Writing .env"<br>
+cat > "${N8N_DIR}/.env" <<EOF<br>
+N8N_HOST=${DOMAIN}<br>
+N8N_PROTOCOL=https<br>
+WEBHOOK_URL=https://${DOMAIN}/<br>
+N8N_EDITOR_BASE_URL=https://${DOMAIN}/<br>
+N8N_PROXY_HOPS=1<br>
+<br>
+N8N_PORT=5678<br>
+N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}<br>
+GENERIC_TIMEZONE=${TIMEZONE}<br>
+TZ=${TIMEZONE}<br>
+N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true<br>
+N8N_RUNNERS_ENABLED=true<br>
+<br>
+DB_TYPE=postgresdb<br>
+DB_POSTGRESDB_HOST=${PG_HOST}<br>
+DB_POSTGRESDB_PORT=${PG_PORT}<br>
+DB_POSTGRESDB_DATABASE=${PG_DATABASE}<br>
+DB_POSTGRESDB_USER=${PG_USER}<br>
+DB_POSTGRESDB_PASSWORD=${PG_PASSWORD}<br>
+DB_POSTGRESDB_SCHEMA=public<br>
+DB_POSTGRESDB_SSL_ENABLED=true<br>
+DB_POSTGRESDB_SSL_REJECT_UNAUTHORIZED=false<br>
+EOF<br>
+<br>
+chmod 600 "${N8N_DIR}/.env"<br>
+<br>
+log "Writing docker-compose.yml"<br>
+cat > "${N8N_DIR}/docker-compose.yml" <<EOF<br>
+services:<br>
+  n8n:<br>
+    image: docker.n8n.io/n8nio/n8n:${N8N_VERSION}<br>
+    container_name: n8n<br>
+    restart: unless-stopped<br>
+    env_file:<br>
+      - .env<br>
+    ports:<br>
+      - "127.0.0.1:5678:5678"<br>
+    volumes:<br>
+      - n8n_data:/home/node/.n8n<br>
+<br>
+volumes:<br>
+  n8n_data:<br>
+EOF<br>
+<br>
+log "Starting n8n"<br>
+docker compose -f "${N8N_DIR}/docker-compose.yml" up -d<br>
 
 ########################################
 # Caddy config
