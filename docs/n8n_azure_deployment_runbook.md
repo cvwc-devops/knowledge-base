@@ -136,42 +136,42 @@ nano docker-compose.yml
 Paste this:
 
 '''
-services:
-  n8n:
-    image: docker.n8n.io/n8nio/n8n:latest
-    container_name: n8n
-    restart: unless-stopped
-    env_file:
-      - .env
-    ports:
-      - "127.0.0.1:5678:5678"
-    volumes:
-      - n8n_data:/home/node/.n8n
-
-volumes:
-  n8n_data:
+services:<br>
+  n8n:<br>
+    image: docker.n8n.io/n8nio/n8n:latest<br>
+    container_name: n8n<br>
+    restart: unless-stopped<br>
+    env_file:<br>
+      - .env<br>
+    ports:<br>
+      - "127.0.0.1:5678:5678"<br>
+    volumes:<br>
+      - n8n_data:/home/node/.n8n<br>
+<br>
+volumes:<br>
+  n8n_data:<br>
 '''
 
 ## 8) Start n8n
 '''
-docker compose up -d
+docker compose up -d<br>
 docker compose logs -f
 '''
 
 Check:
 '''
-docker ps
+docker ps<br>
 curl -I http://127.0.0.1:5678
 '''
 
 ## 9) Install Caddy
 '''
-sudo apt update
-sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
-sudo apt update
-sudo apt install -y caddy
+sudo apt update<br>
+sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https curl<br>
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg<br>
+curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list<br>
+sudo apt update<br>
+sudo apt install -y caddy<br>
 '''
 
 URL:
@@ -191,8 +191,8 @@ n8n.example.com {
 
 Restart:
 '''
-sudo systemctl restart caddy
-sudo systemctl status caddy
+sudo systemctl restart caddy<br>
+sudo systemctl status caddy<br>
 '''
 
 URL:
@@ -218,38 +218,38 @@ curl -X GET "https://n8n.example.com/webhook-test/hello"
 
 If the webhook URL is wrong, re-check:
 '''
-WEBHOOK_URL=https://n8n.example.com/
-N8N_PROXY_HOPS=1
-N8N_PROTOCOL=https
-N8N_HOST=n8n.example.com
+WEBHOOK_URL=https://n8n.example.com/<br>
+N8N_PROXY_HOPS=1<br>
+N8N_PROTOCOL=https<br>
+N8N_HOST=n8n.example.com<br>
 '''
 
 ## 13) Update n8n later
 '''
-cd ~/n8n
-docker compose pull
-docker compose down
-docker compose up -d
-14) Back up these items
+cd ~/n8n<br>
+docker compose pull<br>
+docker compose down<br>
+docker compose up -d<br>
 '''
 
+## 14) Back up these items<br>
 Back up:
 
 PostgreSQL database
 Docker volume for /home/node/.n8n
 '''
-.env
-/etc/caddy/Caddyfile
+.env<br>
+/etc/caddy/Caddyfile<br>
 '''
 
 Full file set
 '''
-.env
-N8N_HOST=n8n.example.com
-N8N_PROTOCOL=https
-WEBHOOK_URL=https://n8n.example.com/
-N8N_EDITOR_BASE_URL=https://n8n.example.com/
-N8N_PROXY_HOPS=1
+.env<br>
+N8N_HOST=n8n.example.com<br>
+N8N_PROTOCOL=https<br>
+WEBHOOK_URL=https://n8n.example.com/<br>
+N8N_EDITOR_BASE_URL=https://n8n.example.com/<br>
+N8N_PROXY_HOPS=1<br>
 
 N8N_PORT=5678
 N8N_ENCRYPTION_KEY=PASTE_YOUR_GENERATED_KEY
