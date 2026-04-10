@@ -345,11 +345,11 @@ Before you run it
 
 Create these first in Azure:
 
-an Ubuntu VM
-an Azure Database for PostgreSQL Flexible Server
-a DNS A record like n8n.example.com pointing to the VM public IP
-NSG rules allowing 22, 80, and 443
-
+an Ubuntu VM<br>
+an Azure Database for PostgreSQL Flexible Server<br>
+a DNS A record like n8n.example.com pointing to the VM public IP<br>
+NSG rules allowing 22, 80, and 443<br>
+<br>
 Have these values ready:
 '''
 DOMAIN like n8n.example.com
