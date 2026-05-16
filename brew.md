@@ -109,3 +109,11 @@ Fix SSL of a package:
 ## Example
 - brew install ffmpeg
 - https://brew.sh
+- https://docs.brew.sh/Manpage
+- https://formulae.brew.sh/
+
+```
+$ brew install wget
+$ brew install --cask firefox
+```
+
