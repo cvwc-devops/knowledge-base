@@ -98,10 +98,14 @@ Fix SSL of a package:
 
 [brew_fix_openssl_dependencies.sh](https://github.com/HariSekhon/DevOps-Bash-tools/blob/master/setup/brew_fix_openssl_dependencies.sh)
 
-## Memes
+## Command
+- brew analytics off brew install appname
+- brew list
+- brew update
+- brew upgrade
+- brew upgrade --greedy
+- brew cleanup -s
 
-### Imported Package Tariffs
-
-![Imported Package Tariffs](images/imported_package_tariffs.jpeg)
-
-**Partial port from private Knowledge Base page 2013+**
+## Example
+- brew install ffmpeg
+- https://brew.sh
