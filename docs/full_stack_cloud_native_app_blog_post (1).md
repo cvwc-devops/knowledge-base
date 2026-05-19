@@ -1,28 +1,6 @@
 # From Zero to Cloud-Native: How to Set Up a New Application with GitHub, Docker, Ansible, Terraform, Kubernetes, AWS, Python, Argo CD, HTML5, CSS, and PostgreSQL
 
-## Tagline
-
 **Ship like a platform team: one app, one pipeline, one repeatable path from laptop to cloud.**
-
----
-
-## 7 Punchy Topic Ideas
-
-1. **Code to Cloud**
-2. **GitOps in Action**
-3. **Docker Done Right**
-4. **Terraform the Base**
-5. **Kubernetes Fast**
-6. **AWS App Launch**
-7. **Python to Prod**
-
----
-
-## SEO Hashtags
-
-#DevOps #CloudNative #GitOps #Docker #Kubernetes #Terraform #Ansible #AWS #Python #PostgreSQL #ArgoCD #Minikube #Kind #CI_CD #InfrastructureAsCode #PlatformEngineering #FullStackDevelopment #WebDevelopment #HTML5 #CSS #CloudEngineering #SoftwareDelivery #Microservices #DevOpsEngineer #KubernetesDeployment
-
----
 
 # The Modern Application Stack Is Not One Tool. It Is a System.
 
