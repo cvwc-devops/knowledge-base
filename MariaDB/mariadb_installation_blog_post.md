@@ -1174,7 +1174,7 @@ MariaDB gives you freedom. That freedom is the selling point — and the respons
 
 On your Mac, MariaDB can be running in minutes. On Linux, it is a reliable self-managed workhorse. On AWS, RDS gives you a managed path that removes much of the operational burden. On Azure and Google Cloud, you need to be more intentional because native managed MariaDB is not the default path.
 
-The punchline is simple:
+It is simple:
 
 **Install MariaDB where it makes sense. Secure it before you trust it. Back it up before you need it. Restore it before you brag about it.**
 
