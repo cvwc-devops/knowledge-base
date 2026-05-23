@@ -1,2 +1,1 @@
-Write an Article about : ”Node.js Deploy to AWS using Terraform along with GitHub action to deploy it, with examples:”, limit up to 39000 words. Also turn this into a polished blog-post format with a stronger intro, takeaway summaries, and a more punchy editorial style.
-Then create a tag line. Create 7 Topics which are punchy and 25 characters or less. Lastly create SEO hashtags, output in canvas or markup text
+Node.js Deploy to AWS using Terraform along with GitHub action to deploy it
