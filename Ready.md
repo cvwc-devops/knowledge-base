@@ -1,4 +1,4 @@
-# KJV Bible Passages
+# Are you ready, arrival is sooner than expected !!
 
 ## Romans 10:9
 Salvation comes through openly confessing Jesus as Lord and truly believing that God raised Him from the dead. Faith is not only private belief; it is also a declared trust in Christ.
